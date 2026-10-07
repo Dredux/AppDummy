@@ -1,5 +1,4 @@
-package edu.RodriguezDavid.appdummy
-
+package edu.rodriguezdavid.appdummy
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,8 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import edu.RodriguezDavid.appdummy.ui.theme.AppDummyTheme
-
+import edu.rodriguezdavid.appdummy.ui.theme.AppDummyTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

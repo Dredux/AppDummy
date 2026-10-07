@@ -1,4 +1,4 @@
-package edu.RodriguezDavid.appdummy.ui.theme
+package edu.rodriguezdavid.appdummy.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

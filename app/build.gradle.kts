@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    namespace = "edu.RodriguezDavid.appdummy"
+    namespace = "edu.rodriguezdavid.appdummy"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "edu.RodriguezDavid.appdummy"
-        minSdk = 24
+        applicationId = "edu.rodriguezdavid.appdummy"
+        minSdk = 30
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
@@ -51,4 +51,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    // Iconos extendidos de Material
+    implementation(libs.androidx.material.icons.extended)
+
+    // Coil 3 y soporte de red OkHttp
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }

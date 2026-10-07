@@ -1,4 +1,4 @@
-package edu.RodriguezDavid.appdummy
+package edu.rodriguezdavid.appdummy
 
 import org.junit.Test
 
