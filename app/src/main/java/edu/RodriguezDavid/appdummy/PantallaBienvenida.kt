@@ -17,17 +17,22 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantallaBienvenida(onEntrar: () -> Unit) {
-    // R3 - El nombre introducido se conserva al rotar el dispositivo.
+    // R3 - El nombre introducido se conserva al rotar el dispositivo con rememberSaveable.
     var nombreUsuario by rememberSaveable { mutableStateOf("") }
+    // Nota: Determina si es verdadero que la longitud del nombre de usuario es mayor a 3
     val botonHabilitado = nombreUsuario.trim().length >= 3
 
     // R4 - La pantalla se estructura con Scaffold y TopAppBar.
+    // Nota: Scaffold parece crear bloques que dividen el contenido en la propia pagina
     Scaffold(
         topBar = {
+            // Nota: TopAppBar parece ser un bloque de Scaffold que se pone en la parte superior
             TopAppBar(
                 title = {
                     Text(
                         text = "AppDummy",
+                        // Funciones que asignan al texto un color o tipografia preseleccionada.
+                        // Sirven para no colocar los colores y tipografias a mano
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -35,6 +40,8 @@ fun PantallaBienvenida(onEntrar: () -> Unit) {
             )
         }
     ) { innerPadding ->
+        // Nota: Column parece crear sus propios bloques de contenido similar a Scaffold
+        // Nota: Al igual que Scaffold, parece que tiene disponibles algunos parametros para delimitar su propio bloque
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -45,6 +52,7 @@ fun PantallaBienvenida(onEntrar: () -> Unit) {
             verticalArrangement = Arrangement.Center
         ) {
             // R1 - Icono decorativo, título, subtítulo y un OutlinedTextField para el nombre del usuario.
+            // Nota: Icon, Spacer, Text, Button o OutlinedtextField son varias funciones especializadas en un tipo de contenido.
             Icon(
                 imageVector = Icons.Default.Book,
                 contentDescription = null,
@@ -79,6 +87,7 @@ fun PantallaBienvenida(onEntrar: () -> Unit) {
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 // R2 - El campo muestra un supportingText y el botón "Entrar" sólo se habilita si el nombre tiene 3 o más caracteres.
+                // Nota: Esta funcion parece que sirve para crear subfunciones que pertenecen al padre.
                 supportingText = {
                     Text(
                         text = "Mínimo 3 caracteres (${nombreUsuario.length}/3)",

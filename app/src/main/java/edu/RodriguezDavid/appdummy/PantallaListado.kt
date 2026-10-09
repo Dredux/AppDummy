@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -41,10 +42,10 @@ fun PantallaListado() {
     val context = LocalContext.current
 
     // Estado local de la pantalla (en B2 pasará al ViewModel)
-    var busqueda by remember { mutableStateOf("") }
-    var autorSeleccionado by remember { mutableStateOf("Todos") }
+    var busqueda by rememberSaveable { mutableStateOf("") }
+    var autorSeleccionado by rememberSaveable { mutableStateOf("Todos") }
     // R5 - Una lista de ejemplos con al menos 5 libros.
-    var libros by remember {
+    var libros by rememberSaveable {
         mutableStateOf(
             listOf(
                 LibroUI(
@@ -120,6 +121,7 @@ fun PantallaListado() {
                         color = MaterialTheme.colorScheme.onSurface
                     )
                 },
+                // Nota: Esto controla el icono de perfil. Aparentemente, suele ser el uso esperado.
                 actions = {
                     IconButton(onClick = { }) {
                         Icon(Icons.Default.AccountCircle, contentDescription = "Perfil")
@@ -155,13 +157,16 @@ fun PantallaListado() {
             )
 
             // Chips de autores
+            // Nota: Parece que hay dos tipos de Columns y dos tipos de Rows, pero los Lazy sí que permiten el scroll por defecto.
+            // Nota: Parece que los Lazy no comparten funciones especializadas con los Column y Rows normales.
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
                 items(autores) { autor ->
-                    // R9 - Filtro por autor mediante FilterChip. La búsqueda y el filtro se combinan y la rejilla se actualiza de forma reactiva.
+                    // R9 - Filtro por autor mediante FilterChip.
+                    // La búsqueda y el filtro se combinan y la rejilla se actualiza de forma reactiva.
                     FilterChip(
                         selected = autor == autorSeleccionado,
                         onClick = { autorSeleccionado = autor },
@@ -181,6 +186,8 @@ fun PantallaListado() {
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
+                    // Nota: Por alguna razón, el tamaño del texto en la busqueda afecta al posicionamiento del mismo y del icono, desplazándolo a la izquierda.
+                    // Nota: El parametro del Column impide que el icono se desplace, pero no impide que el texto lo haga.
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
                             Icons.Default.SearchOff,
