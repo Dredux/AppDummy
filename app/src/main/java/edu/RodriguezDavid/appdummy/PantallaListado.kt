@@ -1,4 +1,5 @@
 package edu.rodriguezdavid.appdummy
+import android.content.Intent
 import android.util.Patterns
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
@@ -37,6 +38,8 @@ data class LibroUI(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantallaListado() {
+    val context = LocalContext.current
+
     // Estado local de la pantalla (en B2 pasará al ViewModel)
     var busqueda by remember { mutableStateOf("") }
     var autorSeleccionado by remember { mutableStateOf("Todos") }
@@ -213,6 +216,19 @@ fun PantallaListado() {
                                 libros = libros.map {
                                     if (it.id == id) it.copy(esFavorito = !it.esFavorito) else it
                                 }
+                            },
+                            // R16 - Acción Compartir en cada libro:
+                            // intent implícito ACTION_SEND con el título y el autor en EXTRA_TEXT.
+                            onShare = {
+                                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                    type = "text/plain"
+                                    putExtra(
+                                        Intent.EXTRA_TEXT,
+                                        "${libro.titulo} - ${libro.autor}"
+                                    )
+                                }
+                                // R16 - lanzado con Intent.createChooser()
+                                context.startActivity(Intent.createChooser(shareIntent, "Compartir libro"))
                             }
                         )
                     }
@@ -223,7 +239,12 @@ fun PantallaListado() {
 }
 
 @Composable
-fun ItemLibro(libro: LibroUI, onToggleLeido: (Int) -> Unit, onToggleFavorito: (Int) -> Unit) {
+fun ItemLibro(
+    libro: LibroUI,
+    onToggleLeido: (Int) -> Unit,
+    onToggleFavorito: (Int) -> Unit,
+    onShare: () -> Unit
+) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier
@@ -286,6 +307,18 @@ fun ItemLibro(libro: LibroUI, onToggleLeido: (Int) -> Unit, onToggleFavorito: (I
                         contentDescription = if (libro.esFavorito) "Quitar favorito" else "Añadir favorito",
                         tint = if (libro.esFavorito) MaterialTheme.colorScheme.error
                         else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                IconButton(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(0.5f),
+                    onClick = onShare
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "Compartir libro",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
