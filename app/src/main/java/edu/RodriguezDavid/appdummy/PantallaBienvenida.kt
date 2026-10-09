@@ -25,7 +25,13 @@ fun PantallaBienvenida(onEntrar: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("AppDummy") }
+                title = {
+                    Text(
+                        text = "AppDummy",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
             )
         }
     ) { innerPadding ->
@@ -64,12 +70,21 @@ fun PantallaBienvenida(onEntrar: () -> Unit) {
             OutlinedTextField(
                 value = nombreUsuario,
                 onValueChange = { nombreUsuario = it },
-                label = { Text("¿Cómo te llamas?") },
+                label = {
+                    Text(
+                        text = "¿Cómo te llamas?",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 // R2 - El campo muestra un supportingText y el botón "Entrar" sólo se habilita si el nombre tiene 3 o más caracteres.
                 supportingText = {
-                    Text("Mínimo 3 caracteres (${nombreUsuario.length}/3)")
+                    Text(
+                        text = "Mínimo 3 caracteres (${nombreUsuario.length}/3)",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             )
 
